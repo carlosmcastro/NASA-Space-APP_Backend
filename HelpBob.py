@@ -1,5 +1,6 @@
 #encoding: utf-8
 #!/usr/bin/env python
+#Modulo de información de la mascota alienigena Bob.
 
 #Ejemplo de uso: Curiosidades.opt('GJ 3021 b', 'pl_pelink')
 #NO MEZCLAR DATOS DE ESTRELLAS CON DATOS DE PLANETAS.
