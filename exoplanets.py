@@ -5,7 +5,7 @@
 #No incluye filtrado por fechas, ni uso de comodines.
 
 #Uso exoplanets.get(tabla_de_datos, conjunto_de_columnas, columnas1,...,columnaN)
-#Ejemplo: exoplanets.get('exoplanets', 0, 'pl_hostname', 'dec')
+#Ejemplo: exoplanets.get('exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum'])
 
 #El script posee un corrector de errores, aproximando el nombre de la tabla y de las columnas a buscar.
 #Es menos aproximado el dato corregido, cuando la palabra equivocada es corta, como por ejemplo poner "dic" en lugar de "dec"
@@ -100,22 +100,26 @@ tables={'exoplanets': (		#Confirmed Planets
 
 #Llamada a la API
 def get(tabl, num, *args):
-	colum=list(set(args))
 	if not tabl in tables.keys():
 		tabla=concor(tabl, tables.keys())
 	else:
 		tabla=tabl
 	columna=[]
-	for col in colum:
-		if not col in tables[tabla][num]:
-			columna.append(concor(col, tables[tabla][num]))
-		else:
-			columna.append(col)
+
+#Comprueba las columnas.
+	for une in range(len(num)):
+		for col in args[une]:
+			if not col in tables[tabla][num[une]]:
+				columna.append(concor(col, tables[tabla][num[une]]))
+			else:
+				columna.append(col)
+
+#Realiza la llamada.
 	response=requests.get(api+'table='+tabla+'&select='+",".join(columna)+'&order=dec&format=json')
 	if response:
 		busqueda=response.json()
 		response.close()
-		return busqueda
+		return busqueda #Convert .csv: import pandas as pd, data=pd.DataFrame(busqueda)
 	else:
 		print('Ha ocurrido un error')
 		
