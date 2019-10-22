@@ -1,16 +1,17 @@
-Despegue de la nave espacial Kepler:
-Lanzamiento de la nave espacial Kepler
-Despegue del cohete Delta II que transportaba la nave espacial Kepler que cazaba planetas.
-Créditos: NASA / Kim Shiflett
-Mira el lanzamiento de la nave espacial Kepler
-El cohete Delta II que transportaba la nave espacial Kepler de la NASA despegó el 6 de marzo de 2009 del Complejo de lanzamiento 17-B en la Estación de la Fuerza Aérea de Cabo Cañaveral en Florida. El lanzamiento se produjo a las 7:49 pm PST, enviando la primera nave espacial de caza de planetas de la agencia en una misión de tres años y medio para buscar signos de otros planetas similares a la Tierra.
+Liftoff of the Kepler spacecraft
+Launch of the Kepler spacecraft
+Liftoff of the Delta II rocket carrying the planet-hunting Kepler spacecraft.
+Credits: NASA/Kim Shiflett
+Watch the launch of the Kepler spacecraft
+The Delta II rocket carrying NASA's Kepler spacecraft lifted off March 6, 2009 from Launch Complex 17-B at Cape Canaveral Air Force Station in Florida. Launch occurred at 7:49 p.m. PST, sending the agency's first planet-hunting spacecraft on a three-and-a-half-year mission to seek signs of other Earth-like planets.
 
-La cuenta regresiva se desarrolló sin problemas durante todo el día, y un pronóstico del tiempo perfecto se mantuvo, permitiendo un despegue a tiempo en el primer intento.
+The countdown proceeded smoothly throughout the day, and a perfect weather forecast held true, allowing an on-time liftoff on the first attempt.
 
-La nave espacial Kepler observará un parche de espacio en busca de indicaciones de planetas del tamaño de la Tierra que orbitan estrellas similares al sol. El área que Kepler observará contiene alrededor de 150,000 estrellas como el sol. Usando detectores especiales similares a los utilizados en las cámaras digitales, Kepler buscará una leve atenuación en las estrellas a medida que los planetas pasan entre las estrellas y Kepler. El lugar del observatorio en el espacio le permitirá mirar las mismas estrellas constantemente durante su misión, algo que los observatorios como el telescopio espacial Hubble de la NASA y los telescopios terrestres no pueden hacer.
+The Kepler spacecraft will watch a patch of space for indications of Earth-sized planets orbiting stars similar to the sun. The area that Kepler will watch contains about 150,000 stars like the sun. Using special detectors similar to those used in digital cameras, Kepler will look for a slight dimming in the stars as planets pass between the stars and Kepler. The observatory's place in space will allow it to watch the same stars constantly throughout its mission, something observatories such as NASA's Hubble Space Telescope and ground-based telescopes cannot do.
 
-Vehículo de lanzamiento:  United Launch Alliance Delta II 7925
-Lugar de lanzamiento:  Estación de la Fuerza Aérea de Cabo Cañaveral
-Plataforma de lanzamiento :  Complejo de lanzamiento 17-B
-Fecha de lanzamiento:  6 de marzo
-Hora de lanzamiento: 7:49:57 pm PST
+
+Launch Vehicle: United Launch Alliance Delta II 7925
+Launch Location: Cape Canaveral Air Force Station
+Launch Pad: Launch Complex 17-B
+Launch Date: March 6
+Launch Time: 7:49:57 p.m. PST
