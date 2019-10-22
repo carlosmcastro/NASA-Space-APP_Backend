@@ -1,16 +1,18 @@
 #encoding: utf-8
 #!/usr/bin/env python
 
+#Ejemplo de uso: Curiosidades.opt('GJ 3021 b', 'pl_pelink')
+#NO MEZCLAR DATOS DE ESTRELLAS CON DATOS DE PLANETAS.
 import pandas as pd
 
 data=pd.read_csv('total_data.csv')
 
 #Se han limpiado los datos de sistemas estelares binarios.
-data=data.drop(data.loc[a['pl_cbflag']==1].index)
+data=data.drop(data.loc[data['pl_cbflag']==1].index)
 
 def opt(astro, *args):
 	info={}
-	if (data.loc[data['pl_name']==astro].pl_kepflag==1) or (data.loc[data['pl_name']==astro].pl_k2flag==1):
+	if (int(data.loc[data['pl_name']==astro].pl_kepflag)==1) or (int(data.loc[data['pl_name']==astro].pl_k2flag)==1):
 		if ('pl_kepflag' in args) or ('pl_k2flag' in args):	#Si es dato de la mision kepler 1 o K2.
 			file=open('Mision_Kepler')
 			misi=[file.read(), "https://www.nasa.gov/mission_pages/kepler/main/index.html", "https://es.wikipedia.org/wiki/Kepler_(sat%C3%A9lite)#Segunda_Luz_(K2)"]
