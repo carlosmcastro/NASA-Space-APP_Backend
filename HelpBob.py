@@ -15,7 +15,7 @@ def opt(astro, *args):
 	info={}
 	if (int(data.loc[data['pl_name']==astro].pl_kepflag)==1) or (int(data.loc[data['pl_name']==astro].pl_k2flag)==1):
 		if ('pl_kepflag' in args) or ('pl_k2flag' in args):	#Si es dato de la mision kepler 1 o K2.
-			file=open('Mision_Kepler')
+			file=open('Mision_Kepler.txt')
 			misi=[file.read(), "https://www.nasa.gov/mission_pages/kepler/main/index.html", "https://es.wikipedia.org/wiki/Kepler_(sat%C3%A9lite)#Segunda_Luz_(K2)"]
 			info['kepler']=misi
 	if 'st_dist' in args:      	#Distancia del sistema al nuestro (parsecs)
@@ -33,5 +33,5 @@ def opt(astro, *args):
 	if 'pl_mnum' in args:		#Número de lunas en el sistema planetario
 		info['lunas']=data.loc[data['pl_name']==astro].pl_mnum
 	if 'pl_pelink' in args:		#Vincula a la pagina de enciclopedia exoplaneta.
-		info['link']=data.loc[data['pl_name']==astro].pl_pelink
+		info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
 	return info
