@@ -11,14 +11,14 @@ data=pd.read_csv('total_data.csv')
 data=data.drop(data.loc[a['pl_cbflag']==1].index)
 
 #Masa minima de planeta (masas de jupiter).
-plmmin=min(list(data.pl_bmassj))
+plmmin=min([i for i in data.pl_bmassj if not str(i)=='nan'])
 #Masa maxima de planeta (masas de jupiter).
-plmmax=max(list(data.pl_bmassj))
+plmmax=max([i for i in data.pl_bmassj if not str(i)=='nan'])
 
 #Masa minima de estrella (masas solares).
-stmmin=min(list(data.st_mass))
+stmmin=min([i for i in data.st_mass if not str(i)=='nan'])
 #Masa maxima de estrella (masas solares).
-stmmax=max(list(data.st_mass))
+stmmax=max([i for i in data.st_mass if not str(i)=='nan'])
 
 #Calculo de qmass, cociente maximo de masa, entre estrella y planeta.
 qmass=0
@@ -26,19 +26,19 @@ for i in list(set(data.pl_hostname)):
 	stmassaux=list(data.loc[data['pl_hostname']==i].st_mass)[0]
 	plmassaux=list(data.loc[data['pl_hostname']==i].pl_bmassj)
 	for u in plmassaux:
-		if qmass<(stmassaux/u)
-			qmass=stmassaux/u
+		if qmass<(u/stmassaux):
+			qmass=u/stmassaux #Esta no es una ecuación de cambio, las unidades de las dos masas son distintas, pero la proporción sirve como comparación estadistica.
 			
 #Densidad minima del planeta (kg / m ** 3)
-pldmin=min(list(data.pl_dens))*1000
+pldmin=min([i for i in data.pl_dens if not str(i)=='nan'])*1000
 #Densidad maxima del planeta (kg / m ** 3).
-pldmax=max(list(data.pl_dens))*1000
+pldmax=max([i for i in data.pl_dens if not str(i)=='nan'])*1000
 
 
 #Densidad minima de la estrella (kg / m ** 3).
-stdmin=min(list(data.st_dens))*1000
+stdmin=min([i for i in data.st_dens if not str(i)=='nan'])*1000
 #Densidad maxima de la estrella (kg/ m ** 3).
-stdmax=max(list(data.st_dens))*1000
+stdmax=max([i for i in data.st_dens if not str(i)=='nan'])*1000
 
 
 #Id==1 para planetas 
@@ -49,14 +49,14 @@ stdmax=max(list(data.st_dens))*1000
 def central(id, rad, *mass):
 	valid=[]
 	if id==1:
-		if (plmmin<=mass[1]<=plmmax) and ((mass[0]/mass[1])<=qmass):
+		if (plmmin<=mass[1]<=plmmax) and ((mass[1]/mass[0])<=qmass):
 			valid.append(True)
-		jupmass=1.898*10**27 #masa jupiter kg
+		jupmass=mass[1]*1.898*10**27 #masa jupiter kg
 		#Radio minimo del planeta radio m**3
 		plramin=(((mass[1]*jupmass)/pldmin)*(4/3)*(1/math.pi)
 		#Radio maximo del planeta radio m**3
 		plramax=((mass[1]*jupmass)/pldmax)*(4/3)*(1/math.pi)
-		terrad=6371*(10**3) #Radio terrestre en metros.
+		terrad=rad*6371*(10**3) #Radio terrestre en metros.
 		if (plramin<=pow(terrad,3)<=plramax):
 			valid.append(True)
 		valid.reverse()
@@ -64,12 +64,12 @@ def central(id, rad, *mass):
 	if id==0:
 		if stmmin<mass[0]<stmmax:
 			valid.append(True)
-		sunmass=1.989*10**30 #masa solar kg
+		sunmass=mass[0]*1.989*10**30 #masa solar kg
 		#Radio minimo de la estrella al cubo m**3
 		stramin=(((mass[0]*sunmass)/stdmin)*(4/3)*(1/math.pi)
 		#Radio maximo de la estrella al cubo m**3
 		stramax=(((mass[0]*sunmass)/stdmax)*(4/3)*(1/math.pi)
-		sunrad=695510 *(10**3) #Radio solar en metros.
+		sunrad=rad*695510 *(10**3) #Radio solar en metros.
 		if (stramin<=pow(terrad,3)<=stramax):
 			valid.append(True)
 		valid.reverse()
@@ -87,6 +87,13 @@ def chz(teff, lum):
 	ros=1,77
 	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lum),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lum)]
 	return zone
+
+
+
+
+
+
+
 
 	
 #0 aposatro
