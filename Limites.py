@@ -135,19 +135,5 @@ def tempo(period, a, apo, peri, gg, mass, locatedd):
 	vf=math.sqrt((gg*mass)*((2/pero)-(1/a)))
 	acc=(vf-vi)/(periodo/2)
 	tem=np.linspace(0, period/2, int(len(locatedd)/2))
-	temv=np.linspace(vi, vf, (len(locatedd)/2))
+	temv=np.linspace(vi, vf, int(len(locatedd)/2))
 	return [vi, vf, acc, tem, temv]
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
