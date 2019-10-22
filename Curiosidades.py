@@ -5,6 +5,9 @@ import pandas as pd
 
 data=pd.read_csv('total_data.csv')
 
+#Se han limpiado los datos de sistemas estelares binarios.
+data=data.drop(data.loc[a['pl_cbflag']==1].index)
+
 def opt(astro, *args):
 	info={}
 	if (data.loc[data['pl_name']==astro].pl_kepflag==1) or (data.loc[data['pl_name']==astro].pl_k2flag==1):

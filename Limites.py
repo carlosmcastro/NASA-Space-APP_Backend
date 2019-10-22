@@ -3,10 +3,12 @@
 import pandas as pd
 import math
 import numpy as np
-#Se han limpiado los datos de sistemas estelares binarios.
 
 #Base de datos.
 data=pd.read_csv('total_data.csv')
+
+#Se han limpiado los datos de sistemas estelares binarios.
+data=data.drop(data.loc[a['pl_cbflag']==1].index)
 
 #Masa minima de planeta (masas de jupiter).
 plmmin=min(list(data.pl_bmassj))
@@ -135,5 +137,19 @@ def tempo(period, a, apo, peri, gg, mass, locatedd):
 	vf=math.sqrt((gg*mass)*((2/pero)-(1/a)))
 	acc=(vf-vi)/(periodo/2)
 	tem=np.linspace(0, period/2, int(len(locatedd)/2))
-	temv=np.linspace(vi, vf, int(len(locatedd)/2))
+	temv=np.linspace(vi, vf, (int(len(locatedd)/2)))
 	return [vi, vf, acc, tem, temv]
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
