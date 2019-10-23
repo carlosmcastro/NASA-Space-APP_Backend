@@ -51,25 +51,31 @@ def central(id, rad, *mass):
 	if id==1:
 		if (plmmin<=mass[1]<=plmmax) and ((mass[1]/mass[0])<=qmass):
 			valid.append(True)
+		
 		jupmass=mass[1]*1.898*10**27 #masa jupiter kg
 		#Radio minimo del planeta radio m**3
 		plramin=(((mass[1]*jupmass)/pldmin)*(4/3)*(1/math.pi)
 		#Radio maximo del planeta radio m**3
 		plramax=((mass[1]*jupmass)/pldmax)*(4/3)*(1/math.pi)
 		terrad=rad*6371*(10**3) #Radio terrestre en metros.
+		
 		if (plramin<=pow(terrad,3)<=plramax):
 			valid.append(True)
 		valid.reverse()
 		return valid
+	
 	if id==0:
+		
 		if stmmin<mass[0]<stmmax:
 			valid.append(True)
+		
 		sunmass=mass[0]*1.989*10**30 #masa solar kg
 		#Radio minimo de la estrella al cubo m**3
 		stramin=(((mass[0]*sunmass)/stdmin)*(4/3)*(1/math.pi)
 		#Radio maximo de la estrella al cubo m**3
 		stramax=(((mass[0]*sunmass)/stdmax)*(4/3)*(1/math.pi)
 		sunrad=rad*695510 *(10**3) #Radio solar en metros.
+		
 		if (stramin<=pow(terrad,3)<=stramax):
 			valid.append(True)
 		valid.reverse()
@@ -77,18 +83,30 @@ def central(id, rad, *mass):
 
 #Calificador de zona habitabitable (garantiza la posibilidad de agua liquida)
 #teff Temperatura efectiva, lum luminosidad estelar
+#lum procede de unidades log(solar)
 def chz(teff, lum):
-	ts=5700 #Kelvin
+	lsun=3.83*(10**26) #Luminosidad solar.
+	lumi=exp(lum)*lsun
+	ts=5777 #Kelvin
 	ai=27619*(10**-5)
 	bi=38095*(10**-9)
 	ao=1,3786*(10**-4)
 	bo=1,4286*(10**-9)
 	ris=0,72
 	ros=1,77
-	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lum),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lum)]
+	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lumi),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lumi)]
 	return zone
 
-
+#Función auxiliar para calcular la luminosidad, en casa de que el dato falte en el dataset.
+#https://exoplanetarchive.ipac.caltech.edu/docs/poet_calculations.html
+#Como los datos proceden en radios solares, se obvia ese dato.
+#resll: radio estelar. En radios solares.
+def lumen(teff, resll):
+	lsun=3.83*(10**26) #Luminosidad solar.
+	ts=5777 #Kelvin
+	return math.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun
+	
+	
 
 
 
