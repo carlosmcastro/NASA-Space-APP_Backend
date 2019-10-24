@@ -4,21 +4,24 @@ import pandas as pd
 import math
 import numpy as np
 
+
 #Base de datos.
 data=pd.read_csv('total_data.csv')
 
 #Se han limpiado los datos de sistemas estelares binarios.
 data=data.drop(data.loc[a['pl_cbflag']==1].index)
 
+#Se filtran valores nulos.
+
 #Masa minima de planeta (masas de jupiter).
-plmmin=min([i for i in data.pl_bmassj if not str(i)=='nan'])
+plmmin=min(data[data.pl_bmassj.isnull()==False].pl_bmassj)
 #Masa maxima de planeta (masas de jupiter).
-plmmax=max([i for i in data.pl_bmassj if not str(i)=='nan'])
+plmmax=max(data[data.pl_bmassj.isnull()==False].pl_bmassj)
 
 #Masa minima de estrella (masas solares).
-stmmin=min([i for i in data.st_mass if not str(i)=='nan'])
+stmmin=min(data[data.st_mass.isnull()==False].st_mass)
 #Masa maxima de estrella (masas solares).
-stmmax=max([i for i in data.st_mass if not str(i)=='nan'])
+stmmax=max(data[data.st_mass.isnull()==False].st_mass)
 
 #Calculo de qmass, cociente maximo de masa, entre estrella y planeta.
 qmass=0
@@ -28,17 +31,16 @@ for i in list(set(data.pl_hostname)):
 	for u in plmassaux:
 		if qmass<(u/stmassaux):
 			qmass=u/stmassaux #Esta no es una ecuación de cambio, las unidades de las dos masas son distintas, pero la proporción sirve como comparación estadistica.
-			
+
 #Densidad minima del planeta (kg / m ** 3)
-pldmin=min([i for i in data.pl_dens if not str(i)=='nan'])*1000
+pldmin=min(data[data.pl_dens.isnull()==False].pl_dens)*1000
 #Densidad maxima del planeta (kg / m ** 3).
-pldmax=max([i for i in data.pl_dens if not str(i)=='nan'])*1000
-
-
+pldmax=max(data[data.pl_dens.isnull()==False].pl_dens)*1000
+		
 #Densidad minima de la estrella (kg / m ** 3).
-stdmin=min([i for i in data.st_dens if not str(i)=='nan'])*1000
+stdmin=min(data[data.st_dens.isnull()==False].st_dens)*1000
 #Densidad maxima de la estrella (kg/ m ** 3).
-stdmax=max([i for i in data.st_dens if not str(i)=='nan'])*1000
+stdmax=max(data[data.st_dens.isnull()==False].st_dens)*1000
 
 
 #Id==1 para planetas 
