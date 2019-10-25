@@ -22,7 +22,10 @@ def opt(astro, *args):
 			file.close()
 			info['kepler']=misi
 	if 'st_dist' in args:      	#Distancia del sistema al nuestro (parsecs)
-		info['distancia']=data.loc[data['st_hostname']==astro].st_dist
+		info['distancia']=data.loc[data['pl_hostname']==astro].st_dist
+			
+	if 'st_age' in args:      	#Edad de la estrella en Gyrs, billones de años.
+		info['age']=[data.loc[data['pl_hostname']==astro].st_age, str(data.loc[data['pl_hostname']==astro].st_age/4.5)+' la edad del sol.']	
 	if 'pl_facility' in args:	#Nombre de la instalación de observaciones de descubrimiento de planetas.
 		info['instalacion']=data.loc[data['pl_name']==astro].pl_facility
 	if 'pl_disc' in args:		#Año de descubrimiento planeta
@@ -41,6 +44,50 @@ def opt(astro, *args):
 		info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
 		if 'pl_edelink' in args:		#Vincula a otra pagina de enciclopedia exoplaneta.
 			info['links'].append(data.loc[data['pl_name']==astro].pl_edelink])
+	if 'st_spstr' in args:				#Da la clasificación de la estrella.
+		tata=''
+		morgank=str(list(data.loc[data['pl_hostname']==astro].st_spstr)[0])
+		#Letras:
+		if 'W' in morgank:
+			tata+="Wolf–Rayet "
+		if 's' in morgank:
+			tata+="Subdwarf star "
+		if 'L' in morgank:
+			tata+="Brown dwarfs "
+		if 'T' in morgank:
+			tata+="Cool brown dwarfs  "
+		if 'A' in morgank:
+			tata+="Bluish-white "
+		if 'F' in morgank:
+			tata+="Yellow-white "
+		if 'O' in morgank:
+			tata+="Blue "
+		if 'B' in morgank:
+			tata+="Blue-white "
+		if 'G' in morgank:
+			tata+="Yellow "
+		if 'K' in morgank:
+			tata+="Orange "
+		if 'M' in morgank:
+			tata+="Red "
+		
+		#Números romanos.
+		if 'VII' in morgank:
+			tata+="white dwarfs "
+		elif 'VI' in morgank:
+			tata+="sub-dwarfs "
+		elif 'IV' in morgank:
+			tata+="sub-giants "
+		elif 'V' in morgank:
+			tata+="Main-Sequence "
+		elif 'III' in morgank:
+			tata+="regular-giant "
+		elif 'II' in morgank:
+			tata+="bright-giant "
+		elif 'I' in morgank:
+			tata+="supergiant "
+			
+		info['MK']=[morgank,tata] #Tipo de estrella en notación y en lenguaje comun
 	return info
 	
 def quest(ask):
@@ -121,10 +168,13 @@ def quest(ask):
 		file=open('HelpBob/stellar_clasification.txt')
 		info['star_clasification']={'title': "How are stars categorized (Spectral Type)?", 'content': file.read()}
 		file.close()
+		
+	if ask=='universal_age':
+		file=open('HelpBob/age_universe.txt')
+		info['']={'title': "Ages and more ages: ", 'content': file.read()}
+		file.close()
 	
-
-	
-	
+	return info
 	
 	
 	
