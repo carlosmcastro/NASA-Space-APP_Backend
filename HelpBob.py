@@ -104,7 +104,7 @@ def quest(ask):
 			
 		nucl="An example of a planetary structure: \n\nTerrestrial spherical shells layers can be divided (by density difference), an outer silicate solid crust, a highly viscous asthenosphere and mantle, a liquid outer core that is much less viscous than the mantle, and a solid inner core. \n\nBeyond all appearances, the shells are not perfect, but irregular joints. But classifying is always useful to try to understand our reality."
 		
-		info['temp_eqt]={'title': "What is Planetary Equilibrium Temperature?", 'content': file.read()+'\n\n'+datc+'\n'+dath+'\n\n'+nucl}
+		info['temp_eqt']={'title': "What is Planetary Equilibrium Temperature?", 'content': file.read()+'\n\n'+datc+'\n'+dath+'\n\n'+nucl}
 		file.close()
 	
 	if ask=='chz':
