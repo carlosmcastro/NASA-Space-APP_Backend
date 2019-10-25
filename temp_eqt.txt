@@ -1,7 +1,0 @@
-It's the estimated temperature assigned by star radiation to a planet. It cannot be taken as a minimum or a maximum, but as a parameter. 
-
-"So what is the actual temperature?"
-
-That is a somewhat more complex measure, the temperature of a planet does not depend solely on stellar radiation. This temperature can vary, depending on whether the planet has atmosphere or not, or on the radioactive disintegration of the nucleus of the planet.
-
-This means that we need more data and measurements. Research involves patience and observation.
