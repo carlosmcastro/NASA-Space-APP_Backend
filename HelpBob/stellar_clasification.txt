@@ -1,0 +1,11 @@
+Astronomers classify stars based on their spectral characteristics, which provide information about the temperature on their surfaces (Effective Temperature).
+
+The method consists of analyzing the light of stars through diffraction grids. Incoming photons are divided into a spectrum of colors. Each of these values shows the presence of a chemical element, the excitation of which occurs at a certain degree of temperature.
+
+Some letters of the alphabet relative to each heat level have been used to make the stellar description: O, B, A, F, G, K, and M, in descending order. The stars O would be the hottest, the M the coldest. But there is also a non-formal classification associating colors to these stars. So the stars O are called blue; B, blue-white; A, white; F, yellow-white; G, yellow; K, orange, and M, red stars; although these are not necessarily the visible tones.
+
+The most up-to-date method for classifying stars is called the Morgan-Keenan system. It adds a numerical range -between 0 and 9- between the spectra of each nominal letter. A5 would be 5 tenths between A0 and F0, the same principle of numerical fractionation, which allows for greater accuracy in spectral values.
+
+Astronomers also include in this system the luminosity of stars, expressed by Roman numerals: I, II, III, IV and V. These values indicate the width of the absorption bands of the spectrum, which in turn refers to the size of these stars. Class I are the supergiants; class III, the giants; V are the dwarfs or main sequence stars.
+
+The spectrum of the Sun would be G2V, which would be read as a main sequence yellow star, two tenths of the orange star.
