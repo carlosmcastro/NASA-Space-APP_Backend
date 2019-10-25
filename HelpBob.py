@@ -39,6 +39,8 @@ def opt(astro, *args):
 		info['planet_number']=list(set(data.loc[data['pl_hostname']==astro].pl_pnum))[0]
 	if 'pl_pelink' in args:		#Vincula a la pagina de enciclopedia exoplaneta.
 		info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
+		if 'pl_edelink' in args:		#Vincula a otra pagina de enciclopedia exoplaneta.
+			info['links'].append(data.loc[data['pl_name']==astro].pl_edelink])
 	return info
 	
 def quest(ask):
@@ -106,7 +108,7 @@ def quest(ask):
 		file.close()
 	
 	if ask=='chz':
-		pass
+		
 	
 	
 	
