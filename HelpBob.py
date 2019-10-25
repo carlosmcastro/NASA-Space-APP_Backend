@@ -179,10 +179,44 @@ def opt(astro, num, *args):
 			file.close()
 	
 	return info
+
+def whopl(**filt): #Planetas filtrados por condiciones
+	datu=data[:]
+	if 'st_dist' in filt.keys():
+		datu=datu[datu.st_dist==filt['st_dist']]
+	if 'st_age' in filt.keys():
+		datu=datu[datu.st_age==filt['st_age']]
+	if 'st_spstr' in filt.keys():
+		datu=datu[datu.st_spstr==filt['st_spstr']]
+	if 'pl_facility' in filt.keys():
+		datu=datu[datu.pl_facility==filt['pl_facility']]
+	if 'pl_disc' in filt.keys():
+		datu=datu[datu.pl_disc==filt['pl_disc']]
+	if 'pl_locale' in filt.keys():
+		datu=datu[datu.pl_locale==filt['pl_locale']]
+	if 'pl_telescope' in filt.keys():
+		datu=datu[datu.pl_telescope==filt['pl_telescope']]
+	if 'pl_instrument' in filt.keys():
+		datu=datu[datu.pl_instrument==filt['pl_instrument']]
+	if 'pl_pnum' in filt.keys():
+		datu=datu[datu.pl_pnum==filt['pl_pnum']]
+	if 'pl_mnum' in filt.keys():
+		datu=datu[datu.pl_mnum==filt['pl_mnum']]
 	
-	
-	
-	
+	if 'mmax' in filt.keys():
+		datu=datu[datu.pl_bmassj<filt['mmax']]
+	if 'mmin' in filt.keys():
+		datu=datu[datu.pl_bmassj>filt['mmin']]
+	if 'rmax' in filt.keys():
+		datu=datu[datu.pl_rade<filt['rmax']]
+	if 'rmin' in filt.keys():
+		datu=datu[datu.pl_rade>filt['rmin']]
+	if 'dmax' in filt.keys():
+		datu=datu[datu.pl_dens<filt['dmax']]
+	if 'dmin' in filt.keys():
+		datu=datu[datu.pl_dens>filt['dmin']]
+
+	return datu.pl_name
 	
 	
 	
