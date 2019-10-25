@@ -217,7 +217,7 @@ def whopl(**filt): #Planetas filtrados por condiciones
 	if 'dmin' in filt.keys():
 		datu=datu[datu.pl_dens>filt['dmin']]
 
-	return datu.pl_name
+	return list(datu.pl_name)
 	
 
 	
