@@ -43,7 +43,7 @@ def opt(astro, *args):
 	if 'pl_pelink' in args:		#Vincula a la pagina de enciclopedia exoplaneta.
 		info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
 		if 'pl_edelink' in args:		#Vincula a otra pagina de enciclopedia exoplaneta.
-			info['links'].append(data.loc[data['pl_name']==astro].pl_edelink])
+			info['links'].append(data.loc[data['pl_name']==astro].pl_edelink)
 	if 'st_spstr' in args:				#Da la clasificación de la estrella.
 		tata=''
 		morgank=str(list(data.loc[data['pl_hostname']==astro].st_spstr)[0])
@@ -91,6 +91,7 @@ def opt(astro, *args):
 	return info
 	
 def quest(ask):
+	info={}
 	if ask=='whatexo': #¿Que es un exoplaneta? Definición de parsecs, planeta y exoplaneta más cercano y lejano
 		file=open('HelpBob/what_exoplanets.txt')
 		near=list(data[data.st_dist==min(data.st_dist)].pl_name)
@@ -100,7 +101,7 @@ def quest(ask):
 			datn='The nearest exoplanet found is called '+near[0]+" and it's aprox. "+str(min(data.st_dist))+' parsecs away.'
 		else:
 			datn='The nearest exoplanets found are called '+", ".join(near)+" and they're aprox. "+str(min(data.st_dist))+' parsecs away.'
-		if len(farh)<2:
+		if len(farth)<2:
 			datf='The farthest exoplanet found is called '+farth[0]+" and it's aprox. "+str(max(data.st_dist))+' parsecs away.'
 		else:
 			datf='The nearest exoplanets found are called '+", ".join(farth)+" and they're aprox. "+str(max(data.st_dist))+' parsecs away.'
@@ -122,13 +123,13 @@ def quest(ask):
 		hot=list(set(data[data.st_teff==max(data[data.st_teff.isnull()==False].st_teff)].pl_hostname))
 		
 		if len(cold)<2:
-			datc='The star with the lowest Effective Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.st_teff.isnull())+' Kelvins.'
+			datc='The star with the lowest Effective Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.st_teff.isnull()==False]))+' Kelvins.'
 		else:
-			datc='The stars with the lowest Effective Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.st_teff.isnull())+' Kelvins.'
+			datc='The stars with the lowest Effective Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.st_teff.isnull()==False]))+' Kelvins.'
 		if len(hot)<2:
-			dath='The star with the highest Effective Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.st_teff.isnull())+' Kelvins.'
+			dath='The star with the highest Effective Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.st_teff.isnull()==False]))+' Kelvins.'
 		else:
-			dath='The stars with the highest Effective Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.st_teff.isnull())+' Kelvins.'
+			dath='The stars with the highest Effective Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.st_teff.isnull()==False]))+' Kelvins.'
 			
 		kelvi="The Kelvin is one of the most widely used temperature units in physics. Because conveniently its 0 is the absolute zero (there is no object colder than 0 Kelvin).\n\nA cup of hot coffee has about 322 K, the effective temperature of the sun is 5778 k, 18 times the temperature of a coffee. \n\nHowever, with 18 hot cups you could not reach the temperature of the sun, as this is a statistical measure of heat. In addition, the sun in its deepest layers can reach 15 million Kelvin."
 		
@@ -141,13 +142,13 @@ def quest(ask):
 		hot=list(set(data[data.pl_eqt==max(data[data.pl_eqt.isnull()==False].pl_eqt)].pl_name))
 		
 		if len(cold)<2:
-			datc='The planet with the lowest Equilibrium Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.pl_eqt.isnull())+' Kelvins.'
+			datc='The planet with the lowest Equilibrium Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
 		else:
-			datc='The planets with the lowest Equilibrium Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.pl_eqt.isnull())+' Kelvins.'
+			datc='The planets with the lowest Equilibrium Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
 		if len(hot)<2:
-			dath='The planet with the highest Equilibrium Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.pl_eqt.isnull())+' Kelvins.'
+			dath='The planet with the highest Equilibrium Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
 		else:
-			dath='The planets with the highest Equilibrium Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.pl_eqt.isnull())+' Kelvins.'
+			dath='The planets with the highest Equilibrium Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
 			
 		nucl="An example of a planetary structure: \n\nTerrestrial spherical shells layers can be divided (by density difference), an outer silicate solid crust, a highly viscous asthenosphere and mantle, a liquid outer core that is much less viscous than the mantle, and a solid inner core. \n\nBeyond all appearances, the shells are not perfect, but irregular joints. But classifying is always useful to try to understand our reality."
 		
