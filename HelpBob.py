@@ -25,7 +25,7 @@ def opt(astro, *args):
 		info['distancia']=data.loc[data['pl_hostname']==astro].st_dist
 			
 	if 'st_age' in args:      	#Edad de la estrella en Gyrs, billones de años.
-		info['age']=[data.loc[data['pl_hostname']==astro].st_age, str(data.loc[data['pl_hostname']==astro].st_age/4.5)+' la edad del sol.']	
+		info['age']=[data.loc[data['pl_hostname']==astro].st_age, str(data.loc[data['pl_hostname']==astro].st_age/4.6)+' la edad del sol.']	
 	if 'pl_facility' in args:	#Nombre de la instalación de observaciones de descubrimiento de planetas.
 		info['instalacion']=data.loc[data['pl_name']==astro].pl_facility
 	if 'pl_disc' in args:		#Año de descubrimiento planeta
