@@ -90,9 +90,9 @@ def opt(astro, *args):
 		info['MK']=[morgank,tata] #Tipo de estrella en notación y en lenguaje comun
 	return info
 	
-def quest(ask):
+def quest(*ask):
 	info={}
-	if ask=='whatexo': #¿Que es un exoplaneta? Definición de parsecs, planeta y exoplaneta más cercano y lejano
+	if 'whatexo' in ask: #¿Que es un exoplaneta? Definición de parsecs, planeta y exoplaneta más cercano y lejano
 		file=open('HelpBob/what_exoplanets.txt')
 		near=list(data[data.st_dist==min(data.st_dist)].pl_name)
 		farth=list(data[data.st_dist==max(data.st_dist)].pl_name)
@@ -112,67 +112,67 @@ def quest(ask):
 		info['exo_definition']={'title': 'What is an exoplanet?', 'content': file.read()+'\n\n'+datn+'\n'+datf+'\n\n'+parse}
 		file.close()
 	
-	if ask=='claexo': #Información sobre la clasificación de estrellas y planetas.
+	if 'claexo' in ask: #Información sobre la clasificación de estrellas y planetas.
 		file=open('HelpBob/names_exoplanets.txt')
 		info['exo_clasification']={'title': 'Exoplanet naming convention', 'content': file.read()}
 		file.close()
 	
-	if ask=='teff': #Temperatura efectiva de estrella.
+	if 'teff' in ask: #Temperatura efectiva de estrella.
 		file=open('HelpBob/temp_effective.txt')
 		cold=list(set(data[data.st_teff==min(data[data.st_teff.isnull()==False].st_teff)].pl_hostname))
 		hot=list(set(data[data.st_teff==max(data[data.st_teff.isnull()==False].st_teff)].pl_hostname))
 		
 		if len(cold)<2:
-			datc='The star with the lowest Effective Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.st_teff.isnull()==False]))+' Kelvins.'
+			datc='The star with the lowest Effective Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.st_teff.isnull()==False].st_teff))+' Kelvins.'
 		else:
-			datc='The stars with the lowest Effective Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.st_teff.isnull()==False]))+' Kelvins.'
+			datc='The stars with the lowest Effective Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.st_teff.isnull()==False].st_teff))+' Kelvins.'
 		if len(hot)<2:
-			dath='The star with the highest Effective Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.st_teff.isnull()==False]))+' Kelvins.'
+			dath='The star with the highest Effective Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.st_teff.isnull()==False].st_teff))+' Kelvins.'
 		else:
-			dath='The stars with the highest Effective Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.st_teff.isnull()==False]))+' Kelvins.'
+			dath='The stars with the highest Effective Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.st_teff.isnull()==False].st_teff))+' Kelvins.'
 			
 		kelvi="The Kelvin is one of the most widely used temperature units in physics. Because conveniently its 0 is the absolute zero (there is no object colder than 0 Kelvin).\n\nA cup of hot coffee has about 322 K, the effective temperature of the sun is 5778 k, 18 times the temperature of a coffee. \n\nHowever, with 18 hot cups you could not reach the temperature of the sun, as this is a statistical measure of heat. In addition, the sun in its deepest layers can reach 15 million Kelvin."
 		
 		info['temp_effectiva']={'title': "What is Effective Temperature?", 'content': file.read()+'\n\n'+datc+'\n'+dath+'\n\n'+kelvi}
 		file.close()
 	
-	if ask=='teeqt': #Temperatura de equilibrio de un planeta. Breve descripción de la estructura de la Tierra.
+	if 'teeqt' in ask: #Temperatura de equilibrio de un planeta. Breve descripción de la estructura de la Tierra.
 		file=open('HelpBob/temp_eqt.txt')
 		cold=list(set(data[data.pl_eqt==min(data[data.pl_eqt.isnull()==False].pl_eqt)].pl_name))
 		hot=list(set(data[data.pl_eqt==max(data[data.pl_eqt.isnull()==False].pl_eqt)].pl_name))
 		
 		if len(cold)<2:
-			datc='The planet with the lowest Equilibrium Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
+			datc='The planet with the lowest Equilibrium Temperature found is called '+cold[0]+" and it's aprox. "+str(min(data[data.pl_eqt.isnull()==False].pl_eqt))+' Kelvins.'
 		else:
-			datc='The planets with the lowest Equilibrium Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
+			datc='The planets with the lowest Equilibrium Temperature found are called '+", ".join(cold)+" and they're aprox. "+str(min(data[data.pl_eqt.isnull()==False].pl_eqt))+' Kelvins.'
 		if len(hot)<2:
-			dath='The planet with the highest Equilibrium Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
+			dath='The planet with the highest Equilibrium Temperature found is called '+hot[0]+" and it's aprox. "+str(max(data[data.pl_eqt.isnull()==False].pl_eqt))+' Kelvins.'
 		else:
-			dath='The planets with the highest Equilibrium Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.pl_eqt.isnull()==False]))+' Kelvins.'
+			dath='The planets with the highest Equilibrium Temperature found are called '+", ".join(hot)+" and they're aprox. "+str(max(data[data.pl_eqt.isnull()==False].pl_eqt))+' Kelvins.'
 			
 		nucl="An example of a planetary structure: \n\nTerrestrial spherical shells layers can be divided (by density difference), an outer silicate solid crust, a highly viscous asthenosphere and mantle, a liquid outer core that is much less viscous than the mantle, and a solid inner core. \n\nBeyond all appearances, the shells are not perfect, but irregular joints. But classifying is always useful to try to understand our reality."
 		
 		info['temp_eqt']={'title': "What is Planetary Equilibrium Temperature?", 'content': file.read()+'\n\n'+datc+'\n'+dath+'\n\n'+nucl}
 		file.close()
 	
-	if ask=='chz': #Zona de habitabilidad
+	if 'chz' in ask: #Zona de habitabilidad
 		file=open('HelpBob/Habitable_Zone.txt')
 		info['chz']={'title': "What is Circumstellar Habitable Zone (CHZ)?", 'content': file.read()}
 		file.close()
 	
-	if ask=='plsystem': #Sistema planetario, como el sistema solar.
+	if 'plsystem' in ask: #Sistema planetario, como el sistema solar.
 		file=open('HelpBob/plt_system.txt')
 		info['planet_system']={'title': "What is Planetary System?", 'content': file.read()}
 		file.close()
 		
-	if ask=='clastar':
+	if 'clastar' in ask:
 		file=open('HelpBob/stellar_clasification.txt')
 		info['star_clasification']={'title': "How are stars categorized (Spectral Type)?", 'content': file.read()}
 		file.close()
 		
-	if ask=='universal_age':
+	if 'universal_age' in ask:
 		file=open('HelpBob/age_universe.txt')
-		info['']={'title': "Ages and more ages: ", 'content': file.read()}
+		info['universal_age']={'title': "Ages and more ages: ", 'content': file.read()}
 		file.close()
 	
 	return info
