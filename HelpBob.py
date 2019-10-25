@@ -91,7 +91,7 @@ def opt(astro, num, *args):
 			info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
 			if 'pl_edelink' in args:		#Vincula a otra pagina de enciclopedia exoplaneta.
 				info['links'].append(data.loc[data['pl_name']==astro].pl_edelink)
-		return info
+	return info
 		
 def quest(*ask):
 	info={}
