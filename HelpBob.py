@@ -18,9 +18,9 @@ def opt(astro, num, *args):
 	info={}
 	if num==0:
 		if 'st_dist' in args:      	#Distancia del sistema al nuestro (parsecs)
-			info['distancia']=data.loc[data['pl_hostname']==astro].st_dist
+			info['distancia']=list(data.loc[data['pl_hostname']==astro].st_dist)[0]
 		if 'st_age' in args:      	#Edad de la estrella en Gyrs, billones de años.
-			info['age']=[data.loc[data['pl_hostname']==astro].st_age, str(list(data.loc[data['pl_hostname']==astro].st_age)[0]/4.6)+' la edad del sol.']	
+			info['age']=[list(data.loc[data['pl_hostname']==astro].st_age)[0], str(list(data.loc[data['pl_hostname']==astro].st_age)[0]/4.6)+' la edad del sol.']	
 		if 'st_spstr' in args:				#Da la clasificación de la estrella.
 			tata=''
 			morgank=str(list(data.loc[data['pl_hostname']==astro].st_spstr)[0])
@@ -74,23 +74,23 @@ def opt(astro, num, *args):
 				file.close()
 				info['kepler']=misi
 		if 'pl_facility' in args:	#Nombre de la instalación de observaciones de descubrimiento de planetas.
-			info['instalacion']=data.loc[data['pl_name']==astro].pl_facility
+			info['instalacion']=list(data.loc[data['pl_name']==astro].pl_facility)[0]
 		if 'pl_disc' in args:		#Año de descubrimiento planeta
-			info['year']=data.loc[data['pl_name']==astro].pl_disc
+			info['year']=list(data.loc[data['pl_name']==astro].pl_disc)[0]
 		if 'pl_locale' in args:		#Lugar en que se descubrio el planeta
-			info['lugar']=data.loc[data['pl_name']==astro].pl_locale
+			info['lugar']=list(data.loc[data['pl_name']==astro].pl_locale)[0]
 		if 'pl_telescope' in args:	#Telescopio que descubrio el planeta
-			info['telescopio']=data.loc[data['pl_name']==astro].pl_telescope
+			info['telescopio']=list(data.loc[data['pl_name']==astro].pl_telescope)[0]
 		if 'pl_instrument' in args:	#Instrumento de descubrimiento de planetas.
-			info['instrument']=data.loc[data['pl_name']==astro].pl_instrument
+			info['instrument']=list(data.loc[data['pl_name']==astro].pl_instrument)[0]
 		if 'pl_mnum' in args:		#Número de lunas en el sistema planetario
-			info['lunas']=data.loc[data['pl_name']==astro].pl_mnum
+			info['lunas']=list(data.loc[data['pl_name']==astro].pl_mnum)[0]
 		if 'pl_pnum' in args:
-			info['planet_number']=list(set(data.loc[data['pl_hostname']==astro].pl_pnum))[0]
+			info['planet_number']=list(data.loc[data['pl_hostname']==astro].pl_pnum)[0]
 		if 'pl_pelink' in args:		#Vincula a la pagina de enciclopedia exoplaneta.
-			info['links']=['https://exoplanets.nasa.gov/' ,data.loc[data['pl_name']==astro].pl_pelink]
+			info['links']=['https://exoplanets.nasa.gov/' ,list(data.loc[data['pl_name']==astro].pl_pelink)[0]]
 			if 'pl_edelink' in args:		#Vincula a otra pagina de enciclopedia exoplaneta.
-				info['links'].append(data.loc[data['pl_name']==astro].pl_edelink)
+				info['links'].append(list(data.loc[data['pl_name']==astro].pl_edelink)[0])
 	return info
 		
 def quest(*ask):
@@ -107,7 +107,7 @@ def quest(*ask):
 		if len(farth)<2:
 			datf='The farthest exoplanet found is called '+farth[0]+" and it's aprox. "+str(max(data.st_dist))+' parsecs away.'
 		else:
-			datf='The nearest exoplanets found are called '+", ".join(farth)+" and they're aprox. "+str(max(data.st_dist))+' parsecs away.'
+			datf='The farthest exoplanets found are called '+", ".join(farth)+" and they're aprox. "+str(max(data.st_dist))+' parsecs away.'
 		
 		#calculos realizados con NASA's Juno spacecraft
 		parse="To travel a parsec distance would take about 3.26 years at the speed of light. Our fastest rocket built would take about 9651 years."
