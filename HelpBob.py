@@ -178,7 +178,7 @@ def quest(*ask):
 		info['universal_age']={'title': "Ages and more ages: ", 'content': file.read()}
 		file.close()
 
-return info
+	return info
 
 def whopl(**filt): #Planetas filtrados por condiciones
 	datu=data[:]
