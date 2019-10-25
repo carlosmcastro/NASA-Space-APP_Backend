@@ -17,7 +17,7 @@ def opt(astro, *args):
 	info={}
 	if (int(data.loc[data['pl_name']==astro].pl_kepflag)==1) or (int(data.loc[data['pl_name']==astro].pl_k2flag)==1):
 		if ('pl_kepflag' in args) or ('pl_k2flag' in args):	#Si es dato de la mision kepler 1 o K2.
-			file=open('Mision_Kepler.txt')
+			file=open('HelpBob/Mision_Kepler.txt')
 			misi=[file.read(), "https://www.nasa.gov/mission_pages/kepler/main/index.html", "https://es.wikipedia.org/wiki/Kepler_(sat%C3%A9lite)#Segunda_Luz_(K2)"]
 			file.close()
 			info['kepler']=misi
@@ -45,7 +45,7 @@ def opt(astro, *args):
 	
 def quest(ask):
 	if ask=='whatexo': #¿Que es un exoplaneta? Definición de parsecs, planeta y exoplaneta más cercano y lejano
-		file=open('what_exoplanets.txt')
+		file=open('HelpBob/what_exoplanets.txt')
 		near=list(data[data.st_dist==min(data.st_dist)].pl_name)
 		farth=list(data[data.st_dist==max(data.st_dist)].pl_name)
 
@@ -65,12 +65,12 @@ def quest(ask):
 		file.close()
 	
 	if ask=='claexo': #Información sobre la clasificación de estrellas y planetas.
-		file=open('names_exoplanets.txt')
+		file=open('HelpBob/names_exoplanets.txt')
 		info['exo_clasification']={'title': 'Exoplanet naming convention', 'content': file.read()}
 		file.close()
 	
 	if ask=='teff': #Temperatura efectiva de estrella.
-		file=open('temp_effective.txt')
+		file=open('HelpBob/temp_effective.txt')
 		cold=list(set(data[data.st_teff==min(data[data.st_teff.isnull()==False].st_teff)].pl_hostname))
 		hot=list(set(data[data.st_teff==max(data[data.st_teff.isnull()==False].st_teff)].pl_hostname))
 		
@@ -89,7 +89,7 @@ def quest(ask):
 		file.close()
 	
 	if ask=='teeqt': #Temperatura de equilibrio de un planeta. Breve descripción de la estructura de la Tierra.
-		file=open('temp_eqt.txt')
+		file=open('HelpBob/temp_eqt.txt')
 		cold=list(set(data[data.pl_eqt==min(data[data.pl_eqt.isnull()==False].pl_eqt)].pl_name))
 		hot=list(set(data[data.pl_eqt==max(data[data.pl_eqt.isnull()==False].pl_eqt)].pl_name))
 		
@@ -107,8 +107,35 @@ def quest(ask):
 		info['temp_eqt']={'title': "What is Planetary Equilibrium Temperature?", 'content': file.read()+'\n\n'+datc+'\n'+dath+'\n\n'+nucl}
 		file.close()
 	
-	if ask=='chz':
+	if ask=='chz': #Zona de habitabilidad
+		file=open('HelpBob/Habitable_Zone.txt')
+		info['chz']={'title': "What is Circumstellar Habitable Zone (CHZ)?", 'content': file.read()}
+		file.close()
+	
+	if ask=='plsystem': #Sistema planetario, como el sistema solar.
+		file=open('HelpBob/plt_system.txt')
+		info['planet_system']={'title': "What is Planetary System?", 'content': file.read()}
+		file.close()
 		
+	if ask=='clastar':
+		file=open('HelpBob/stellar_clasification.txt')
+		info['star_clasification']={'title': "How are stars categorized (Spectral Type)?", 'content': file.read()}
+		file.close()
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
