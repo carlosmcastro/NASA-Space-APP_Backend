@@ -1,9 +1,0 @@
-The effective temperature of a star indicates the amount of heat that the star radiates per unit of surface area. From the warmest surfaces to the coolest is the sequence of stellar classifications known as O, B, A, F, G, K, M.
-
-(We'll talk about the star rating soon)
-
-In other words, the effective temperature is not the actual temperature of the star, but a measurable parameter of its surface.
-
-We must take into account that the stars are very far away and the effective temperature is a good measure accessible for various calculations:
-
-As the CHZ (Circumstellar Habitable Zone), do not be fooled by the name, the conditions for life to be possible, require more than this condition.
