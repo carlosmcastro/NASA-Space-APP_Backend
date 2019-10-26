@@ -48,16 +48,19 @@ jupmass=1.898*(10**27) #Jupiter mass in kg
 earthrad=6371*(10**3) #Earth radius in meters.
 
 #Determine the coherent intervals of mass and radius for planets and stars.
+#NOTE: The data of stars with radii higher than the currently established upper elevation correspond to 0.01% of the total data.
+#I prefer to estimate the data on the basis of known densities (although they are few, they cover most cases). 
+#And when the database is updated, this limit will be moved by the calculations.
 def interval(mass=None): #mass: star mass
 	
 	if mass:
 		plmmaxb=min(plmmax, qmass*mass)
-		racomp=[((plmmin*jupmass)/pldmin)*(3/4)*(1/math.pi), ((plmmaxb*jupmass)/pldmax)*(3/4)*(1/math.pi)]
+		racomp=[((plmmin*jupmass)/pldmax)*(3/4)*(1/math.pi), ((plmmaxb*jupmass)/pldmin)*(3/4)*(1/math.pi)]
 		radlim=np.cbrt(racomp)/earthrad
 		radlim.sort()
 		return {'m': (plmmin,plmmaxb), 'r': tuple(radlim)}
 	else:
-		racomp=[((stmmin*sunmass)/stdmin)*(3/4)*(1/math.pi), ((stmmax*sunmass)/stdmax)*(3/4)*(1/math.pi)]
+		racomp=[((stmmin*sunmass)/stdmax)*(3/4)*(1/math.pi), ((stmmax*sunmass)/stdmin)*(3/4)*(1/math.pi)]
 		radlim=np.cbrt(racomp)/sunrad
 		radlim.sort()
 		return {'m': (stmmin,stmmax), 'r': tuple(radlim)}
@@ -88,7 +91,7 @@ def test(id, **kward):
 	
 		tt={}
 		tested=interval()
-		
+
 		if tested['m'][0]<=kward['m']<=tested['m'][1]:
 			tt['m']=True
 		else:
@@ -114,17 +117,19 @@ def dens(id, mass, rad): #Density in gr/cm**3
 #teff: Effective temperature, lum: stellar luminance
 #lum comes from log(solar) units
 def chz(teff, lum):
-	lsun=3.83*(10**26) #Luminosidad solar. En Watts
-	lumi=exp(lum)*lsun
+	lsun=3.83*10**26 #Luminosidad solar. En Watts
+	lumi=np.exp(lum)*lsun
 	ts=5777 #Kelvin
-	ai=27619*(10**-5)
-	bi=38095*(10**-9)
-	ao=1,3786*(10**-4)
-	bo=1,4286*(10**-9)
-	ris=0,72
-	ros=1,77
-	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lumi),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lumi)]
-	return zone
+	ai=27619*10**-5
+	bi=38095*10**-9
+	ao=1.3786*10**-4
+	bo=1.4286*10**-9
+	ris=0.72
+	ros=1.77
+	liminferior=(ris-ai*(teff-ts)-bi*(teff-ts)**2)*np.sqrt(lumi)
+	limsuperior=(ros-ao*(teff-ts)-bo*(teff-ts)**2)*np.sqrt(lumi)
+	zone=[liminferior, limsuperior]
+	return zone #Units UA 
 
 #Auxiliary function to calculate the luminosity, in case the data is missing in the dataset.
 #https://exoplanetarchive.ipac.caltech.edu/docs/poet_calculations.html
@@ -133,7 +138,7 @@ def chz(teff, lum):
 def lumen(teff, resll):
 	lsun=3.83*(10**26) #Solar luminosity.
 	ts=5777 #Kelvin
-	return math.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun		
+	return np.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun		
 		
 		
 		
