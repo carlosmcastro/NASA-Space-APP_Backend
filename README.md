@@ -25,8 +25,11 @@ Description of the modules:
         HelpBob.whopl(Key_name_a=number/string, key_name_b=number/string)
         
     Examples:
+        
         HelpBob.opt('GJ 3021 b', 1, 'pl_pelink')    #Link Information
+        
         HelpBob.quest('whatexo')    #Information "What is Exoplanet?"
+        
         HelpBob.opt(whopl, st_age=2, mmax=32)   #Plantets with stars of 2 Gyr old, and less to 32 (Jupiter mass)
         
         
