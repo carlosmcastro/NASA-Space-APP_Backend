@@ -54,11 +54,13 @@ def interval(mass=None): #mass: star mass
 		plmmaxb=min(plmmax, qmass*mass)
 		racomp=[((plmmin*jupmass)/pldmin)*(3/4)*(1/math.pi), ((plmmaxb*jupmass)/pldmax)*(3/4)*(1/math.pi)]
 		radlim=np.cbrt(racomp)/earthrad
-		return {'m': (plmmin,plmmaxb), 'r': tuple(radlim.sort())}
+		radlim.sort()
+		return {'m': (plmmin,plmmaxb), 'r': tuple(radlim)}
 	else:
 		racomp=[((stmmin*sunmass)/stdmin)*(3/4)*(1/math.pi), ((stmmax*sunmass)/stdmax)*(3/4)*(1/math.pi)]
 		radlim=np.cbrt(racomp)/sunrad
-		return {'m': (stmmin,stmmax), 'r': tuple(radlim.sort())}
+		radlim.sort()
+		return {'m': (stmmin,stmmax), 'r': tuple(radlim)}
 
 #id=0 Star, id=1 Planet	
 #test(0,m=massstar, r=starrad)	
