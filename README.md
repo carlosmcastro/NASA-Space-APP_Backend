@@ -9,6 +9,7 @@ Description of the modules:
     Dependencies: Pandas (Python Data Analysis Library), requests
     
     Sintax:
+        
         Download in memory, data in Json format:
         
             exoplanets.get(table_of_data, tuple_of_number_colum, column1,...,columnN)
@@ -27,6 +28,7 @@ Description of the modules:
     Dependencies: Pandas (Python Data Analysis Library)
 
     Syntax: 
+        
         Visualize star data (Distance, age, type) or planet (Links, planetary system moons, planetary system planets, Discovery information:   Year, installation, instrument and telescope): 
 
         HelpBob.opt('name_planet/name_star', 0/1, 'ID code data 1', 'ID code data 2')
