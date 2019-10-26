@@ -15,6 +15,8 @@
 #El script devulve un dicciónario con datos Json.
 
 import requests
+import pickle
+import pandas as pd
 
 api="https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?" #Parametro obligatorio
 
@@ -130,3 +132,38 @@ def concor(dato, conjunto):
 	for i in conjunto:
 		similar[len(set(dato).intersection(set(i)))]=i
 	return similar[max(similar.keys())]
+
+#acut es una Lista
+#Sevicio de actualización de base de datos.	
+def update(acut=None):
+	if acut:
+		datexo=acut
+		filedatexo=open('data.pickle', 'wb')
+		pickle.dump(datexo, filedatexo)
+		filedatexo.close()
+	else:
+		filedatexo=open('data.pickle', 'rb')
+		datexo=pickle.load(filedatexo)
+		filedatexo.close()
+	
+	jsn=get(datexo[0], datexo[1], *datexo[2:])
+	data=pd.DataFrame(jsn)
+	data.to_csv('total_data.csv', index=False)
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
