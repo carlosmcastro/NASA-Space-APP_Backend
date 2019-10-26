@@ -1,27 +1,32 @@
 #encoding: utf-8
 #!/usr/bin/env python
-#Más información: https://exoplanetarchive.ipac.caltech.edu/docs/program_interfaces.html
-#Uso de API NASA Exoplanet Archive; para optimizar la visualización de datos de Planetas Confirmados.
-#No incluye filtrado por fechas, ni uso de comodines.
+#More information: https://exoplanetarchive.ipac.caltech.edu/docs/program_interfaces.html
+#Use of API NASA Exoplanet Archive; to optimize the visualization of data from Confirmed Planets.
+#It does not include filtering by dates, nor use of wildcards.
 
-#Uso exoplanets.get(tabla_de_datos, conjunto_de_columnas, columnas1,...,columnaN)
-#Ejemplo: exoplanets.get('exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum'])
+#Use exoplanets.get(table_of_data, tuple_of_number_colum, column1,...,columnN)
+#Example: exoplanets.get('exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum'])
 
-#El script posee un corrector de errores, aproximando el nombre de la tabla y de las columnas a buscar.
-#Es menos aproximado el dato corregido, cuando la palabra equivocada es corta, como por ejemplo poner "dic" en lugar de "dec"
+#Use exoplanets.update([table_of_data, tuple_of_number_colum, column1,...,columnN]) #Renew data choice. Generates serialized file for next updates.
+#Example: exoplanets.update(['exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum']])
 
-#Solo se puede acceder a un conjunto de datos por conjunto de columnas, esto ocurre intencionalmente, para forzar la busqueda de datos precisos.
+#Use exoplanets.update() #Updates data based on serialized file.
 
-#El script devulve un dicciónario con datos Json.
+#The script has an error corrector, approximating the name of the table and the columns to search.
+#It is less approximate the corrected data, when the wrong word is short, such as putting "dic" instead of "dec".
+
+#Only one set of data can be accessed per set of columns, this happens intentionally, to force the search for accurate data.
+
+#The script returns a dictionary with Json data.
 
 import requests
 import pickle
 import pandas as pd
 
-api="https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?" #Parametro obligatorio
+api="https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?" #Obligatory parameter
 
-#tabla de Planetas confirmados (Obligatorio)
-#tabla: (columnas)
+#table of confirmed Planets (Obligatory)
+#table: (columns)
 tables={'exoplanets': (		#Confirmed Planets
 					   ('pl_hostname', 'pl_letter', 'pl_name', 'pl_discmethod', 'pl_controvflag', #Default Columns
 					   'pl_pnum', 'pl_orbper', 'pl_orbsmax', 'pl_orbeccen', 'pl_orbincl', 
@@ -100,7 +105,7 @@ tables={'exoplanets': (		#Confirmed Planets
 						), 	
 		} 
 
-#Llamada a la API
+#get to API
 def get(tabl, num, *args):
 	if not tabl in tables.keys():
 		tabla=concor(tabl, tables.keys())
@@ -108,7 +113,7 @@ def get(tabl, num, *args):
 		tabla=tabl
 	columna=[]
 
-#Comprueba las columnas.
+#Check the columnns.
 	for une in range(len(num)):
 		for col in args[une]:
 			if not col in tables[tabla][num[une]]:
@@ -116,7 +121,7 @@ def get(tabl, num, *args):
 			else:
 				columna.append(col)
 
-#Realiza la llamada.
+#Make a request.
 	response=requests.get(api+'table='+tabla+'&select='+",".join(columna)+'&order=dec&format=json')
 	if response:
 		busqueda=response.json()
@@ -126,15 +131,15 @@ def get(tabl, num, *args):
 		print('Ha ocurrido un error')
 		
 		
-#Verifica los datos de busqueda reales, más cercanos.
+#Verify the actual, lexically closest search data.
 def concor(dato, conjunto):
 	similar={}
 	for i in conjunto:
 		similar[len(set(dato).intersection(set(i)))]=i
 	return similar[max(similar.keys())]
 
-#acut es una Lista
-#Sevicio de actualización de base de datos.	
+#acut is a List
+#Database update service.	
 def update(acut=None):
 	if acut:
 		datexo=acut
@@ -149,21 +154,3 @@ def update(acut=None):
 	jsn=get(datexo[0], datexo[1], *datexo[2:])
 	data=pd.DataFrame(jsn)
 	data.to_csv('total_data.csv', index=False)
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
