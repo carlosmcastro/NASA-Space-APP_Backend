@@ -31,15 +31,15 @@ Description of the modules:
         
         Visualize star data (Distance, age, type) or planet (Links, planetary system moons, planetary system planets, Discovery information:   Year, installation, instrument and telescope): 
 
-        HelpBob.opt('name_planet/name_star', 0/1, 'ID code data 1', 'ID code data 2')
+              HelpBob.opt('name_planet/name_star', 0/1, 'ID code data 1', 'ID code data 2')
         
         Access to informative texts, astronomical curiosities and definitions. Format Title, Content. Exoplanets, parsecs, Gyr, core, mantle, earth's crust, effective temperature, equilibrium temperature, habitability zone, spectral type, and so on:
         
-        HelpBob.quest('Text code 1', 'Text code 2')
+               HelpBob.quest('Text code 1', 'Text code 2')
         
         Planet filter (By distance, star type, star age [age of the planetary system], maximum mass, minimum mass, radius, and so on):
         
-        HelpBob.whopl(Key_name_a=number/string, key_name_b=number/string)
+               HelpBob.whopl(Key_name_a=number/string, key_name_b=number/string)
         
     Examples:
         
