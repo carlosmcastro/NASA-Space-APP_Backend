@@ -6,7 +6,22 @@ Repository to manage the database of exoplanets of the nasa.Repository to manage
 Description of the modules:
 
 * exoplanets.py extracts the data securely; it also has a syntax error corrector.
-    sintax: exoplanets.get('exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum'])
+    Dependencies: Pandas (Python Data Analysis Library), requests
+    
+    Sintax:
+        Download in memory, data in Json format:
+        
+            exoplanets.get(table_of_data, tuple_of_number_colum, column1,...,columnN)
+            
+        Update dataset:
+            
+            exoplanets.update([table_of_data, tuple_of_number_colum, column1,...,columnN]) or exoplanets.update()
+
+    Examples:
+    
+        exoplanets.get('exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum'])
+        
+        exoplanets.update(['exoplanets', (0,1), ['pl_hostname', 'pl_letter'], ['pl_name', 'pl_mnum']])
     
 * HelpBob.py Intriguing data of exoplanets for didactic use.
     Dependencies: Pandas (Python Data Analysis Library)
