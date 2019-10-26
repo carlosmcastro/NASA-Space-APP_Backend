@@ -42,14 +42,14 @@ stdmin=min(data[data.st_dens.isnull()==False].st_dens)*1000
 #Densidad maxima de la estrella (kg/ m ** 3).
 stdmax=max(data[data.st_dens.isnull()==False].st_dens)*1000
 
+#Units Constants
+sunmass=mass[0]*1.989*10**30 #masa solar kg
+sunrad=rad*695510 *(10**3) #Radio solar en metros.
+jupmass=1.898*(10**27) #masa jupiter kg
+earthrad=6371*(10**3) #Radio terrestre en metros.
+
 #Determina los intervalos coherentes de masa y radio, para planetas y estrellas.
 def interval(mass=None): #mass: star mass
-	
-	#Units Constants
-	sunmass=mass[0]*1.989*10**30 #masa solar kg
-	sunrad=rad*695510 *(10**3) #Radio solar en metros.
-	jupmass=1.898*(10**27) #masa jupiter kg
-	earthrad=6371*(10**3) #Radio terrestre en metros.
 	
 	if mass:
 		plmmaxb=min(plmmax, qmass*mass)
@@ -61,7 +61,9 @@ def interval(mass=None): #mass: star mass
 		radlim=np.cbrt(racomp)/sunrad
 		return {'m': (stmmin,stmmax), 'r': tuple(radlim.sort())}
 
-#id=0 Star, id=1 Planet		
+#id=0 Star, id=1 Planet	
+#test(0,m=massstar, r=starrad)	
+#test(1,m=(massstar, massplanet), r=planetrad)	
 def test(id, **kward):
 	
 	if id==1:
@@ -97,11 +99,40 @@ def test(id, **kward):
 			tt['r']=False
 
 		return tt		
+
+#id=0 Star, id=1 Planet
+#masa, en masas de jupiter ó masas solares, radios en radios solares, o radios terrestres		
+def dens(id, mass, rad): #Densidad en gr/cm**3
+	if id==0:
+		return ((mass*sunmass)/((4/3)*math.pi*pow(sunrad*rad, 3)))/1000
+	if id==1:
+		return ((mass*jupmass)/((4/3)*math.pi*pow(earthrad*rad, 3)))/1000
 		
 		
-		
-		
-		
+#Calificador de zona habitabitable (garantiza la posibilidad de agua liquida)
+#teff Temperatura efectiva, lum luminosidad estelar
+#lum procede de unidades log(solar)
+def chz(teff, lum):
+	lsun=3.83*(10**26) #Luminosidad solar. En Watts
+	lumi=exp(lum)*lsun
+	ts=5777 #Kelvin
+	ai=27619*(10**-5)
+	bi=38095*(10**-9)
+	ao=1,3786*(10**-4)
+	bo=1,4286*(10**-9)
+	ris=0,72
+	ros=1,77
+	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lumi),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lumi)]
+	return zone
+
+#Función auxiliar para calcular la luminosidad, en casa de que el dato falte en el dataset.
+#https://exoplanetarchive.ipac.caltech.edu/docs/poet_calculations.html
+#Como los datos proceden en radios solares, se obvia ese dato.
+#resll: radio estelar. En radios solares.
+def lumen(teff, resll):
+	lsun=3.83*(10**26) #Luminosidad solar.
+	ts=5777 #Kelvin
+	return math.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun		
 		
 		
 		
