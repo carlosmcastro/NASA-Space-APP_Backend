@@ -9,7 +9,7 @@ import numpy as np
 data=pd.read_csv('total_data.csv')
 
 #Se han limpiado los datos de sistemas estelares binarios.
-data=data.drop(data.loc[a['pl_cbflag']==1].index)
+data=data.drop(data.loc[data['pl_cbflag']==1].index)
 
 #Se filtran valores nulos.
 
@@ -56,7 +56,7 @@ def central(id, rad, *mass):
 		
 		jupmass=mass[1]*1.898*10**27 #masa jupiter kg
 		#Radio minimo del planeta radio m**3
-		plramin=(((mass[1]*jupmass)/pldmin)*(4/3)*(1/math.pi)
+		plramin=((mass[1]*jupmass)/pldmin)*(4/3)*(1/math.pi)
 		#Radio maximo del planeta radio m**3
 		plramax=((mass[1]*jupmass)/pldmax)*(4/3)*(1/math.pi)
 		terrad=rad*6371*(10**3) #Radio terrestre en metros.
@@ -73,9 +73,9 @@ def central(id, rad, *mass):
 		
 		sunmass=mass[0]*1.989*10**30 #masa solar kg
 		#Radio minimo de la estrella al cubo m**3
-		stramin=(((mass[0]*sunmass)/stdmin)*(4/3)*(1/math.pi)
+		stramin=((mass[0]*sunmass)/stdmin)*(4/3)*(1/math.pi)
 		#Radio maximo de la estrella al cubo m**3
-		stramax=(((mass[0]*sunmass)/stdmax)*(4/3)*(1/math.pi)
+		stramax=((mass[0]*sunmass)/stdmax)*(4/3)*(1/math.pi)
 		sunrad=rad*695510 *(10**3) #Radio solar en metros.
 		
 		if (stramin<=pow(terrad,3)<=stramax):
@@ -113,8 +113,8 @@ def lumen(teff, resll):
 
 
 
-
-
+#Zona a revisar
+"""
 	
 #0 aposatro
 #1 excentricidad
@@ -167,7 +167,7 @@ def tempo(period, a, apo, peri, gg, mass, locatedd):
 	temv=np.linspace(vi, vf, (int(len(locatedd)/2)))
 	return [vi, vf, acc, tem, temv]
 	
-	
+"""
 	
 	
 	
