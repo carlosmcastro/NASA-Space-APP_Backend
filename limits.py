@@ -4,51 +4,50 @@ import pandas as pd
 import math
 import numpy as np
 
-
-#Base de datos.
+#Database.
 data=pd.read_csv('total_data.csv')
 
-#Se han limpiado los datos de sistemas estelares binarios.
+#Binary stellar system data has been cleansed.
 data=data.drop(data.loc[data['pl_cbflag']==1].index)
 
-#Se filtran valores nulos.
+#Null values are filtered out.
 
-#Masa minima de planeta (masas de jupiter).
+#Minimum mass of planet (masses of jupiter).
 plmmin=min(data[data.pl_bmassj.isnull()==False].pl_bmassj)
-#Masa maxima de planeta (masas de jupiter).
+#Maximum mass of planet (masses of jupiter).
 plmmax=max(data[data.pl_bmassj.isnull()==False].pl_bmassj)
 
-#Masa minima de estrella (masas solares).
+#Minimal mass of star (solar masses).
 stmmin=min(data[data.st_mass.isnull()==False].st_mass)
-#Masa maxima de estrella (masas solares).
+#Maximum star mass (solar masses).
 stmmax=max(data[data.st_mass.isnull()==False].st_mass)
 
-#Calculo de qmass, cociente maximo de masa, entre estrella y planeta.
+#Calculation of qmass, maximum mass quotient, between planet and star.
 qmass=0
 for i in list(set(data.pl_hostname)):
 	stmassaux=list(data.loc[data['pl_hostname']==i].st_mass)[0]
 	plmassaux=list(data.loc[data['pl_hostname']==i].pl_bmassj)
 	for u in plmassaux:
 		if qmass<(u/stmassaux):
-			qmass=u/stmassaux #Esta no es una ecuación de cambio, las unidades de las dos masas son distintas, pero la proporción sirve como comparación estadistica.
+			qmass=u/stmassaux #This is not an equation of change, the units of the two masses are different, but the ratio functions as a statistical comparison.
 
-#Densidad minima del planeta (kg / m ** 3)
+#Minimum density of the planet (kg / m ** 3)
 pldmin=min(data[data.pl_dens.isnull()==False].pl_dens)*1000
-#Densidad maxima del planeta (kg / m ** 3).
+#Maximum density of the planet (kg / m ** 3).
 pldmax=max(data[data.pl_dens.isnull()==False].pl_dens)*1000
 		
-#Densidad minima de la estrella (kg / m ** 3).
+#Minimum density of the star (kg / m ** 3).
 stdmin=min(data[data.st_dens.isnull()==False].st_dens)*1000
-#Densidad maxima de la estrella (kg/ m ** 3).
+#Maximum density of the star (kg/ m ** 3).
 stdmax=max(data[data.st_dens.isnull()==False].st_dens)*1000
 
 #Units Constants
-sunmass=mass[0]*1.989*10**30 #masa solar kg
-sunrad=rad*695510 *(10**3) #Radio solar en metros.
-jupmass=1.898*(10**27) #masa jupiter kg
-earthrad=6371*(10**3) #Radio terrestre en metros.
+sunmass=mass[0]*1.989*10**30 #Solar mass in kg
+sunrad=rad*695510 *(10**3) #Solar radius in metros.
+jupmass=1.898*(10**27) #Jupiter mass in kg
+earthrad=6371*(10**3) #Earth radius in meters.
 
-#Determina los intervalos coherentes de masa y radio, para planetas y estrellas.
+#Determine the coherent intervals of mass and radius for planets and stars.
 def interval(mass=None): #mass: star mass
 	
 	if mass:
@@ -101,17 +100,17 @@ def test(id, **kward):
 		return tt		
 
 #id=0 Star, id=1 Planet
-#masa, en masas de jupiter ó masas solares, radios en radios solares, o radios terrestres		
-def dens(id, mass, rad): #Densidad en gr/cm**3
+#mass, in jupiter masses or solar masses, radius in solar radius, or earth radius		
+def dens(id, mass, rad): #Density in gr/cm**3
 	if id==0:
 		return ((mass*sunmass)/((4/3)*math.pi*pow(sunrad*rad, 3)))/1000
 	if id==1:
 		return ((mass*jupmass)/((4/3)*math.pi*pow(earthrad*rad, 3)))/1000
 		
 		
-#Calificador de zona habitabitable (garantiza la posibilidad de agua liquida)
-#teff Temperatura efectiva, lum luminosidad estelar
-#lum procede de unidades log(solar)
+#habitable zone qualifier (guarantees the possibility of liquid water, if there is water on the planet)
+#teff: Effective temperature, lum: stellar luminance
+#lum comes from log(solar) units
 def chz(teff, lum):
 	lsun=3.83*(10**26) #Luminosidad solar. En Watts
 	lumi=exp(lum)*lsun
@@ -125,12 +124,12 @@ def chz(teff, lum):
 	zone=[ris-(ai*(teff-ts))-(bi*((teff-ts)**2))*math.sqrt(lumi),ros-(ao*(teff-ts))-(bo*((teff-ts)**2))*math.sqrt(lumi)]
 	return zone
 
-#Función auxiliar para calcular la luminosidad, en casa de que el dato falte en el dataset.
+#Auxiliary function to calculate the luminosity, in case the data is missing in the dataset.
 #https://exoplanetarchive.ipac.caltech.edu/docs/poet_calculations.html
-#Como los datos proceden en radios solares, se obvia ese dato.
-#resll: radio estelar. En radios solares.
+#As the data proceed in solar radius, that data is obvited.
+#resll: stellar radio. On solar radios.
 def lumen(teff, resll):
-	lsun=3.83*(10**26) #Luminosidad solar.
+	lsun=3.83*(10**26) #Solar luminosity.
 	ts=5777 #Kelvin
 	return math.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun		
 		
