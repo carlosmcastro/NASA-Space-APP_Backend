@@ -42,8 +42,8 @@ stdmin=min(data[data.st_dens.isnull()==False].st_dens)*1000
 stdmax=max(data[data.st_dens.isnull()==False].st_dens)*1000
 
 #Units Constants
-sunmass=mass[0]*1.989*10**30 #Solar mass in kg
-sunrad=rad*695510 *(10**3) #Solar radius in metros.
+sunmass=1.989*10**30 #Solar mass in kg
+sunrad=695510 *(10**3) #Solar radius in metros.
 jupmass=1.898*(10**27) #Jupiter mass in kg
 earthrad=6371*(10**3) #Earth radius in meters.
 
