@@ -1,7 +1,7 @@
 # NASA-Space-APP_Backend
 Backend for planetary construction project
 
-Repository to manage the database of exoplanets of the nasa.Repository to manage the database of exoplanets of the nasa.
+Repository to manage the database of exoplanets of the nasa.
 
 Description of the modules:
 
