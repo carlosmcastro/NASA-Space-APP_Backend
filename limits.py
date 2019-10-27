@@ -1,8 +1,8 @@
 #encoding: utf-8
 #!/usr/bin/env python
 import pandas as pd
-import math
 import numpy as np
+import sympy as sp
 
 #Database.
 data=pd.read_csv('total_data.csv')
@@ -46,6 +46,7 @@ sunmass=1.989*10**30 #Solar mass in kg
 sunrad=695510 *(10**3) #Solar radius in metros.
 jupmass=1.898*(10**27) #Jupiter mass in kg
 earthrad=6371*(10**3) #Earth radius in meters.
+g=6.674*10**-11		#Gravitational constant
 
 #Determine the coherent intervals of mass and radius for planets and stars.
 #NOTE: The data of stars with radii higher than the currently established upper elevation correspond to 0.01% of the total data.
@@ -55,12 +56,12 @@ def interval(mass=None): #mass: star mass
 	
 	if mass:
 		plmmaxb=min(plmmax, qmass*mass)
-		racomp=[((plmmin*jupmass)/pldmax)*(3/4)*(1/math.pi), ((plmmaxb*jupmass)/pldmin)*(3/4)*(1/math.pi)]
+		racomp=[((plmmin*jupmass)/pldmax)*(3/4)*(1/np.pi), ((plmmaxb*jupmass)/pldmin)*(3/4)*(1/np.pi)]
 		radlim=np.cbrt(racomp)/earthrad
 		radlim.sort()
 		return {'m': (plmmin,plmmaxb), 'r': tuple(radlim)}
 	else:
-		racomp=[((stmmin*sunmass)/stdmax)*(3/4)*(1/math.pi), ((stmmax*sunmass)/stdmin)*(3/4)*(1/math.pi)]
+		racomp=[((stmmin*sunmass)/stdmax)*(3/4)*(1/np.pi), ((stmmax*sunmass)/stdmin)*(3/4)*(1/np.pi)]
 		radlim=np.cbrt(racomp)/sunrad
 		radlim.sort()
 		return {'m': (stmmin,stmmax), 'r': tuple(radlim)}
@@ -108,9 +109,9 @@ def test(id, **kward):
 #mass, in jupiter masses or solar masses, radius in solar radius, or earth radius		
 def dens(id, mass, rad): #Density in gr/cm**3
 	if id==0:
-		return ((mass*sunmass)/((4/3)*math.pi*pow(sunrad*rad, 3)))/1000
+		return ((mass*sunmass)/((4/3)*np.pi*pow(sunrad*rad, 3)))/1000
 	if id==1:
-		return ((mass*jupmass)/((4/3)*math.pi*pow(earthrad*rad, 3)))/1000
+		return ((mass*jupmass)/((4/3)*np.pi*pow(earthrad*rad, 3)))/1000
 		
 		
 #habitable zone qualifier (guarantees the possibility of liquid water, if there is water on the planet)
@@ -139,15 +140,78 @@ def lumen(teff, resll):
 	lsun=3.83*(10**26) #Solar luminosity.
 	ts=5777 #Kelvin
 	return np.log(lsun*(pow(resll, 2)*pow(teff/ts, 4)))/lsun		
+	
+
+#Main collision module. Returns False if they do not collide, returns True if they do.
+#sintax: collision((periastro_p1, velocity_p1, star_mass, planet_mass_p1),(periastro_p2, velocity_p2, star_mass, planet_mass_p2))
+#p1: Planet 1, p2: Planet 2, discc is optional, it is the "impact range".
+def collision(pltone, plttwo, discc=np.pi/180):
+	
+	rp=np.array([pltone[0], plttwo[0]])*au #periastro
+	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s**2
+	mstr=np.array([pltone[2], plttwo[2]])*sunmass #star mass in kilograms
+	mplt=np.array([pltone[3], plttwo[3]])*jupmass #planet mass in kilograms
+	momang=rp*vl*mplt	#angular moment
+	d=(momang**2)/(g*mstr*mplt**2)	
+	ex=(d/rp)-1	#excentricidad
+	ra=d/(1-ex) #apoastro
+
+	a=(rp+ra)/2 #semi-axis major
+	b=a*np.sqrt(1-ex**2) #semi-axis-minor
+	c=a-rp	#Focus distance
+	
+	#Orbit ellipses
+	e1=sp.Ellipse(sp.Point(-c[0], 0), a[0], b[0])
+	e2=sp.Ellipse(sp.Point(-c[1], 0), a[1], b[1])
+	
+	if e1==e2: #If they're in the same orbit.
+		return True
+			
+	fi=np.array([])
+	if e1.intersection(e2):
+		fi=np.append(fi, [angut(i.evalf()[0],i.evalf()[1]) for i in e1.intersection(e2)])
 		
+		timell=[kepeq(mstr, a, ex, u) for u in fi]
+		if (timell[:,1]==timell[:,0]).any():	#If they are at the same time at the same angle, of a point of intersection.
+			return True
 		
+		#If they're within each other's time range.
+		timellbe=[kepeq(mstr, a, ex, u-discc) for u in fi]
+		timellaf=[kepeq(mstr, a, ex, u+discc) for u in fi]
+		if (timellbe[:,0]<timell[:,1]).any() and (timell[:,1]<timellaf[:,0]).any():
+			return True
+		if (timellbe[:,1]<timell[:,0]).any() and (timell[:,0]<timellaf[:,1]).any():
+			return True
 		
+		#Same as before, but scaling, in case the orbits differ too much in their periods.
+		scall=np.round(timell.max(axis=1)/timell.min(axis=1))
+		if (timellbe[:,0]<timell[:,1]*scall).any() and (timell[:,1]*scall<timellaf[:,0]).any():
+			return True
+		if (timellbe[:,1]<timell[:,0]*scall).any() and (timell[:,0]*scall<timellaf[:,1]).any():
+			return True
 		
+	else:
+		return False
 		
-		
-		
-		
-		
-		
-		
-		
+def angut(a, b):  #x,y to angule.
+
+	if a>0 and b>0: #First quadrant
+		return np.arctan(b/a)
+	if a<0 and b>0:	#Second quadrant
+		return np.pi-np.arctan(b/a*-1)
+	if a<0 and b<0:	#Thirst quadrant
+		return np.pi+np.arctan(b/a)
+	if a>0 and b<0:	#Four quadrant
+		return 2*np.pi+np.arctan(b/a)
+
+#Kepler equation.
+def kepeq(mst, aa, exx, th): #star mass, semi-major axis, excentricity, angule 
+
+	c_E=(exx+np.cos(th))/(1+exx*np.cos(th))
+	s_E=np.sqrt(1-exx**2)*np.sin(th)/(1+exx*np.cos(th))
+	E=np.arctan2(s_E,c_E)
+	while E<0:
+		E=2*pi+E
+	t=(E-exx*s_E)*aa**(3/2)/np.sqrt(g*mst);
+	
+	return t #time in second
