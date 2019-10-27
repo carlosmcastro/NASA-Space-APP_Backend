@@ -50,4 +50,45 @@ Description of the modules:
         HelpBob.opt(whopl, st_age=2, mmax=32)   #Plantets with stars of 2 Gyr old, and less to 32 (Jupiter mass)
         
         
-* Limits.py Analysis of realistic limitations of mass, volume, density, zone of habitability. Tools for preventive analysis to avoid collisions in orbits.
+* Limits.py Analysis of realistic limitations of mass, volume, density, zone of habitability. Tools for preventive analysis to avoid collisions in orbits. 
+    Denpendencies: Pandas (Python Data Analysis Library), Numpy, Sympy.
+    
+    Sintax:
+        
+        Determine the coherent intervals of mass and radius for planets and stars.
+            
+            Planet: limits.interval(star_mass) #In Solar mass.
+            
+            Star: limits.interval()     #Statistical Determination
+          
+         Test if a radius and a mass is consistent with the limits.
+         
+            #id=0 Star, id=1 Planet	
+            
+            limits.test(0,m=massstar, r=starrad)	
+            
+            limits.test(1,m=(massstar, massplanet), r=planetrad)
+            
+         Calculate density.
+         
+            limits.dens(id, mass, rad): #Density in gr/cm**3
+            
+         Habitable zone qualifier (guarantees the possibility of liquid water, if there is water on the planet).
+         
+            limits.chz(teff, lum)   #teff: Effective temperature, lum: stellar luminance. lum comes from log(solar) units
+            
+          Auxiliary function to calculate the luminosity, in case the data is missing in the dataset.
+          
+            limits.lumen(teff, resll) #resll: stellar radio. On solar radius.
+            
+          Main collision module. Returns False if they do not collide, returns True if they do.
+          
+            limits.collision((periastro_p1, velocity_p1, star_mass, planet_mass_p1),(periastro_p2, velocity_p2, star_mass, planet_mass_p2), discc)
+            
+            #p1: Planet 1, p2: Planet 2, discc is optional, it is the "impact range" in radian angles.
+            
+          Auxiliary modules for collisions.
+          
+            limits.angut(x, y) #From x, y to angle
+            
+            limits.kepeq(mst, aa, exx, th): #Calculation of t in relation to the angle. Parameters: Star mass, semi-major axis, excentricity, angule.
