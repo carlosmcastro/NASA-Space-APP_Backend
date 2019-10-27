@@ -112,7 +112,7 @@ def quest(*ask):
 			datf='The farthest exoplanets found are called '+", ".join(farth)+" and they're aprox. "+str(max(data.st_dist))+' parsecs away.'
 		
 		#Calculations made with NASA's Juno spacecraft
-		parse="To travel a parsec distance would take about 3.26 years at the speed of light. Our fastest rocket built would take about 9651 years."
+		parse="To travel to one parsec distance would take about 3.26 years at the speed of light. Our fastest rocket built would take about 9651 years."
 
 		info['exo_definition']={'title': 'What is an exoplanet?', 'content': file.read()+'\n\n'+datn+'\n'+datf+'\n\n'+parse}
 		file.close()
