@@ -51,7 +51,7 @@ Description of the modules:
         
         
 * Limits.py Analysis of realistic limitations of mass, volume, density, zone of habitability. Tools for preventive analysis to avoid collisions in orbits. 
-    Denpendencies: Pandas (Python Data Analysis Library), Numpy, Sympy.
+    Dependencies: Pandas (Python Data Analysis Library), Numpy, Sympy.
     
     Sintax:
         
