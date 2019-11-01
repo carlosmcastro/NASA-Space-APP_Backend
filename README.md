@@ -81,7 +81,7 @@ Description of the modules:
           
             limits.lumen(teff, resll) #resll: stellar radio. On solar radius.
             
-          Main collision module. Returns False if they do not collide, returns True if they do.
+          Main collision module. RReturns False if orbits intersect, but do not collide. Nothing, if they do not intersect, and True if they collide.
           
             limits.collision((periastro_p1, velocity_p1, star_mass, planet_mass_p1),(periastro_p2, velocity_p2, star_mass, planet_mass_p2), discc)
             
@@ -92,3 +92,11 @@ Description of the modules:
             limits.angut(x, y) #From x, y to angle
             
             limits.kepeq(mst, aa, exx, th): #Calculation of t in relation to the angle. Parameters: Star mass, semi-major axis, excentricity, angule.
+
+________________________________________________________________________________________________________________________________________
+
+Updates:
+Updates are made in a separate folder so as not to interfere with what has been achieved in Space App.
+
+*Limits.py added constant au, which was deleted by mistake from the original script.
+
