@@ -157,7 +157,7 @@ def collision(pltone, plttwo, discc=np.pi/180):
 	ex=(d/rp)-1	#excentricidad
 	ra=d/(1-ex) #apoastro
 
-	assert ex>=0, "Negative invalid data."
+	assert all(ex>=0), "Negative invalid data."
 	
 	if ex==1:
 		return ["Parabolic orbit. Remember, the answer is about collisions in elliptical orbits."]
