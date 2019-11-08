@@ -81,7 +81,7 @@ Description of the modules:
           
             limits.lumen(teff, resll) #resll: stellar radio. On solar radius.
             
-          Main collision module. RReturns False if orbits intersect, but do not collide. Nothing, if they do not intersect, and True if they collide.
+          Main collision module. Returns False if orbits intersect, but do not collide. Nothing, if they do not intersect, and True if they collide.
           
             limits.collision((periastro_p1, velocity_p1, star_mass, planet_mass_p1),(periastro_p2, velocity_p2, star_mass, planet_mass_p2), discc)
             
@@ -100,3 +100,4 @@ Updates are made in a separate folder so as not to interfere with what has been 
 
 *Limits.py added constant au, which was deleted by mistake from the original script.
 
+*Limits.py Added exception for parabolic and hyperbolic orbits, with eccentricity not allowed.
