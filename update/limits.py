@@ -148,7 +148,7 @@ def lumen(teff, resll):
 #p1: Planet 1, p2: Planet 2, discc is optional, it is the "impact range".
 def collision(pltone, plttwo, discc=np.pi/180):
 	
-	rp=np.array([pltone[0], plttwo[0]])*au #periastro
+	rp=np.array([pltone[0], plttwo[0]])*au #periastro in metters
 	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s**2
 	mstr=np.array([pltone[2], plttwo[2]])*sunmass #star mass in kilograms
 	mplt=np.array([pltone[3], plttwo[3]])*jupmass #planet mass in kilograms
@@ -157,11 +157,12 @@ def collision(pltone, plttwo, discc=np.pi/180):
 	ex=(d/rp)-1	#excentricidad
 	ra=d/(1-ex) #apoastro
 
+	print(ex)
 	assert all(ex>=0), "Negative invalid data."
 	
-	if ex==1:
+	if any(ex==1):
 		return ["Parabolic orbit. Remember, the answer is about collisions in elliptical orbits."]
-	if ex>1:
+	if any(ex>1):
 		return ["Hyperbolic orbit. Remember, the answer is about collisions in elliptical orbits."]
 	
 	a=(rp+ra)/2 #semi-axis major
