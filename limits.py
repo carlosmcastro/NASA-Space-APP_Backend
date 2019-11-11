@@ -47,6 +47,7 @@ sunrad=695510 *(10**3) #Solar radius in metros.
 jupmass=1.898*(10**27) #Jupiter mass in kg
 earthrad=6371*(10**3) #Earth radius in meters.
 g=6.674*10**-11		#Gravitational constant
+au=149597870700
 
 #Determine the coherent intervals of mass and radius for planets and stars.
 #NOTE: The data of stars with radii higher than the currently established upper elevation correspond to 0.01% of the total data.
@@ -147,8 +148,8 @@ def lumen(teff, resll):
 #p1: Planet 1, p2: Planet 2, discc is optional, it is the "impact range".
 def collision(pltone, plttwo, discc=np.pi/180):
 	
-	rp=np.array([pltone[0], plttwo[0]])*au #periastro
-	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s**2
+	rp=np.array([pltone[0], plttwo[0]])*au #periastro in metters
+	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s
 	mstr=np.array([pltone[2], plttwo[2]])*sunmass #star mass in kilograms
 	mplt=np.array([pltone[3], plttwo[3]])*jupmass #planet mass in kilograms
 	momang=rp*vl*mplt	#angular moment
@@ -156,6 +157,13 @@ def collision(pltone, plttwo, discc=np.pi/180):
 	ex=(d/rp)-1	#excentricidad
 	ra=d/(1-ex) #apoastro
 
+	assert all(ex>=0), "Negative invalid data."
+	
+	if any(ex==1):
+		return ["Parabolic orbit. Remember, the answer is about collisions in elliptical orbits."]
+	if any(ex>1):
+		return ["Hyperbolic orbit. Remember, the answer is about collisions in elliptical orbits."]
+	
 	a=(rp+ra)/2 #semi-axis major
 	b=a*np.sqrt(1-ex**2) #semi-axis-minor
 	c=a-rp	#Focus distance
