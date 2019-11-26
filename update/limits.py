@@ -13,14 +13,14 @@ data=data.drop(data.loc[data['pl_cbflag']==1].index)
 #Null values are filtered out.
 
 #Minimum mass of planet (masses of jupiter).
-plmmin=min(data[data.pl_bmassj.isnull()==False].pl_bmassj)
+plmmin=data[data.pl_bmassj.isnull()==False].pl_bmassj.min()
 #Maximum mass of planet (masses of jupiter).
-plmmax=max(data[data.pl_bmassj.isnull()==False].pl_bmassj)
+plmmax=data[data.pl_bmassj.isnull()==False].pl_bmassj.max()
 
 #Minimal mass of star (solar masses).
-stmmin=min(data[data.st_mass.isnull()==False].st_mass)
+stmmin=data[data.st_mass.isnull()==False].st_mass.min()
 #Maximum star mass (solar masses).
-stmmax=max(data[data.st_mass.isnull()==False].st_mass)
+stmmax=data[data.st_mass.isnull()==False].st_mass.max()
 
 #Calculation of qmass, maximum mass quotient, between planet and star.
 qmass=0
@@ -32,14 +32,14 @@ for i in list(set(data.pl_hostname)):
 			qmass=u/stmassaux #This is not an equation of change, the units of the two masses are different, but the ratio functions as a statistical comparison.
 
 #Minimum density of the planet (kg / m ** 3)
-pldmin=min(data[data.pl_dens.isnull()==False].pl_dens)*1000
+pldmin=data[data.pl_dens.isnull()==False].pl_dens.min()*1000
 #Maximum density of the planet (kg / m ** 3).
-pldmax=max(data[data.pl_dens.isnull()==False].pl_dens)*1000
+pldmax=data[data.pl_dens.isnull()==False].pl_dens.max()*1000
 		
 #Minimum density of the star (kg / m ** 3).
-stdmin=min(data[data.st_dens.isnull()==False].st_dens)*1000
+stdmin=data[data.st_dens.isnull()==False].st_dens.min()*1000
 #Maximum density of the star (kg/ m ** 3).
-stdmax=max(data[data.st_dens.isnull()==False].st_dens)*1000
+stdmax=data[data.st_dens.isnull()==False].st_dens.max()*1000
 
 #Units Constants
 sunmass=1.989*10**30 #Solar mass in kg
@@ -56,7 +56,7 @@ au=149597870700
 def interval(mass=None): #mass: star mass
 	
 	if mass:
-		plmmaxb=min(plmmax, qmass*mass)
+		plmmaxb=np.min([plmmax, qmass*mass])
 		racomp=[((plmmin*jupmass)/pldmax)*(3/4)*(1/np.pi), ((plmmaxb*jupmass)/pldmin)*(3/4)*(1/np.pi)]
 		radlim=np.cbrt(racomp)/earthrad
 		radlim.sort()
@@ -149,7 +149,7 @@ def lumen(teff, resll):
 def collision(pltone, plttwo, discc=np.pi/180):
 	
 	rp=np.array([pltone[0], plttwo[0]])*au #periastro in metters
-	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s**2
+	vl=np.array([pltone[1], plttwo[1]]) #velocity: m/s
 	mstr=np.array([pltone[2], plttwo[2]])*sunmass #star mass in kilograms
 	mplt=np.array([pltone[3], plttwo[3]])*jupmass #planet mass in kilograms
 	momang=rp*vl*mplt	#angular moment
@@ -157,7 +157,6 @@ def collision(pltone, plttwo, discc=np.pi/180):
 	ex=(d/rp)-1	#excentricidad
 	ra=d/(1-ex) #apoastro
 
-	print(ex)
 	assert all(ex>=0), "Negative invalid data."
 	
 	if any(ex==1):
@@ -198,8 +197,9 @@ def collision(pltone, plttwo, discc=np.pi/180):
 			return True
 		if (timellbe[:,1]<timell[:,0]*scall).any() and (timell[:,0]*scall<timellaf[:,1]).any():
 			return True
-		
+
 	else:
+		
 		return False
 		
 def angut(a, b):  #x,y to angule.
