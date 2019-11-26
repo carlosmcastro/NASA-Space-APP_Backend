@@ -101,3 +101,5 @@ Updates are made in a separate folder so as not to interfere with what has been 
 *Limits.py added constant au, which was deleted by mistake from the original script.
 
 *Limits.py Added exception for parabolic and hyperbolic orbits, with eccentricity not allowed.
+
+*Python's max() and min() functions were dispensed with. And it has been changed by the equivalent Pandas functions, this radically accelerates the execution of certain processes.
